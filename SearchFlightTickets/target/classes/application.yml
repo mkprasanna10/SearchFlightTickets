@@ -1,0 +1,24 @@
+
+  
+
+server:
+  port: 8090
+
+spring:
+  application.name: SearchFlightTickets
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: searchuser_junit
+    password: aspire123
+    tomcat:
+      initial-size: 20
+      max-active: 25
+      
+  jpa:
+    show-sql: true
+    hibernate:
+      default_schema: FAREUSER_JUNIT
+
+debug: true
+
