@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.brownfield.pss.search.entity.Flight;
+import com.brownfield.pss.search.entity.Inventory;
 import com.brownfield.pss.search.repository.FlightRepository;
 
 @Service
@@ -34,5 +35,29 @@ public class SearchComponent
 		System.out.println("Post Query");
 		
 		return searchResult.stream().filter(e -> e.getInventory().getCount() > 0).collect(Collectors.toList());	
-	}	
 	}
+	
+	public Inventory TicketCountUpdate(String flightNumber,String flightDate, int new_inventory)
+	{
+		System.out.println("Inventory [flightNumber=" + flightNumber + ", flightDate=" + flightDate + ", Inventorycount=" + new_inventory +"]");
+		Flight flight = flightrepo.findByFlightNumberAndFlightDate(flightNumber,flightDate);
+		Inventory inventory = null;
+		if(flight != null)
+		{
+			System.out.println("Inside Inventory Update Logic");
+			inventory = flight.getInventory();
+			inventory.setCount(new_inventory);
+			flightrepo.save(flight);
+		} 
+		else
+			try 
+			{
+				throw new Exception("", new Throwable());
+			} 
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return inventory;
+	}
+}
